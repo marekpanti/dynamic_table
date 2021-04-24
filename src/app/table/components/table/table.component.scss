@@ -1,0 +1,14 @@
+.content {
+    margin: 5rem auto;
+    width: 80%;
+    max-width: 600px;
+    min-width: 380px;
+
+    .table {
+        margin: 1rem 0;
+
+        ::ng-deep .mat-form-field {
+            margin-right: 1rem;
+        }
+    }
+}

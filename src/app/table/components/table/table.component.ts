@@ -49,6 +49,7 @@ export class TableComponent implements OnInit {
       control.removeAt(index);
       this.undoRow.splice(index, 1);
       this.dataSource = this.myForm.controls['rows'].value;
+      this.getAccounts();
     }, 3000);
   }
 

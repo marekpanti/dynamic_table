@@ -1,9 +1,9 @@
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  FormArray
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  UntypedFormArray
 } from '@angular/forms';
 
 @Component({
@@ -17,8 +17,8 @@ export class TableComponent implements OnInit {
   dataSource;
   undoRow = [{ showUndo: false, timer: 0 }];
   countId = 0;
-  public myForm: FormGroup;
-  constructor(private _fb: FormBuilder){}
+  public myForm: UntypedFormGroup;
+  constructor(private _fb: UntypedFormBuilder){}
 
   ngOnInit() {
     this.myForm = this._fb.group({
@@ -39,7 +39,7 @@ export class TableComponent implements OnInit {
 
  removeRow(i, id) {
     this.undoRow[i].showUndo = true;
-    const control = <FormArray>this.myForm.controls['rows'];
+    const control = <UntypedFormArray>this.myForm.controls['rows'];
     this.undoRow[i].timer = setTimeout(() => {
       const index = control.value
         .map(d => {
@@ -55,7 +55,7 @@ export class TableComponent implements OnInit {
 
   addRows() {
     this.countId++;
-    const control = <FormArray>this.myForm.controls['rows'];
+    const control = <UntypedFormArray>this.myForm.controls['rows'];
     control.push(this.initRows(this.countId));
     this.dataSource = this.myForm.controls['rows'].value;
     this.undoRow.push({ showUndo: false, timer: 0 });

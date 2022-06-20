@@ -1,5 +1,9 @@
 # DynamicTable
 
+This project is an Angular show case, serves as my presentation for interviews and at the same time for explaining some tips and tricks to my collegues.
+
+This project uses lazy loaded modules, store based on behaviourSubject, material design, example with local storage and services sandbox or facades.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
 ## Development server

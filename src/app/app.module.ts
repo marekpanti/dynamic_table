@@ -4,16 +4,19 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MaterialModule } from './material.module';
+import { EnterComponent } from './enter/enter.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EnterComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,11 +10,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { SummaryComponent } from './components/summary/summary.component';
+import { EnterComponent } from '../enter/enter.component';
 
 @NgModule({
-  declarations: [TableComponent, SummaryComponent],
+  declarations: [TableComponent, SummaryComponent, EnterComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,7 +24,7 @@ import { SummaryComponent } from './components/summary/summary.component';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   providers: [],
 })

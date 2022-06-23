@@ -9,10 +9,13 @@ export class StoreService extends ObservableStore<StoreState> {
     super({ trackStateHistory: true });
     const initialState: StoreState = {
       table: [],
+      timeOuts: {},
     };
     this.setState(initialState, 'INIT_STATE');
   }
 
+
+  // One time action, no need to subscribe
   get() {
     const { table } = this.getState();
     if (table) {
@@ -41,9 +44,26 @@ export class StoreService extends ObservableStore<StoreState> {
     this.setState({ table: tableState }, 'ADD_ROW_TO_TABLE');
   }
 
-  remove() {
-    let state = this.getState();
-    state.table.splice(state.table.length - 1, 1);
-    this.setState({ table: state.table }, 'REMOVE_ROW');
+  changeUndoState(id) {
+    let state = this.getState().table;
+    const rowIndex = state.findIndex(row => row.id === id);
+    state[rowIndex].showUndo = !state[rowIndex].showUndo;
+    this.setState({ table: state }, 'CHANGE_UNDO_STATE');
+  }
+
+  setTimeOut(id) {
+    let timeOuts = this.getState().timeOuts;
+
+  }
+
+  clearTimeOut(id) {
+
+  }
+
+  removeRow(id) {
+    let state = this.getState().table;
+    const rowIndex = state.findIndex(row => row.id === id);
+    state.splice(rowIndex, 1);
+    this.setState({ table: state }, 'REMOVE_ROW_ID');
   }
 }

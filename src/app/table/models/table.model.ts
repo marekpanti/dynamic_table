@@ -7,4 +7,5 @@ export interface TableForm {
 
 export interface StoreState {
   table: any[];
+  timeOuts: {};
 }

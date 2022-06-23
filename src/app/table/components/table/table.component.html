@@ -77,18 +77,18 @@
               <mat-icon>done</mat-icon>
             </button>
             <button
-              *ngIf="!undoRow[i].showUndo"
+              *ngIf="!element.showUndo"
               mat-icon-button
               color="warn"
-              (click)="removeRow(i, element.id)"
+              (click)="removeRow(element.id)"
             >
               <mat-icon>delete</mat-icon>
             </button>
             <button
-              *ngIf="undoRow[i].showUndo"
+              *ngIf="element.showUndo"
               mat-button
               color="warn"
-              (click)="undoDelete(i)"
+              (click)="undoDelete(element.id)"
             >
               undo
             </button>

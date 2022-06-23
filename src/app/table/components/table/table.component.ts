@@ -5,73 +5,76 @@ import {
   FormGroup,
   FormControl,
   FormArray,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { TableForm } from '../../models/table.model';
 import { StoreService } from '../../store.service';
+import { TableFacadeService } from '../../table-facade.service';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'account', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'firstName',
+    'lastName',
+    'account',
+    'actions',
+  ];
   dataSource;
   undoRow = [{ showUndo: false, timer: 0 }];
   countId = 0;
   public myForm: UntypedFormGroup;
-  constructor(private store: StoreService){}
+  constructor(
+    private store: StoreService,
+    private facade: TableFacadeService
+  ) {}
 
   ngOnInit() {
     this.myForm = new FormGroup<TableForm>({
       testField: new FormControl<string>('testValue'),
-      rows: new FormArray([this.initRows(0)])
+      rows: new FormArray([this.initRows(0)]),
     });
     this.dataSource = this.myForm.controls['rows'].value;
-    this.myForm.valueChanges.subscribe(d => console.log(d));
+    // this.store.add(this.myForm.controls['rows'].value[0]);
+    this.saveRow(0);
+    // this.myForm.valueChanges.subscribe((d) => console.log(d));
+    this.store.stateChanged.subscribe(data => {
+      console.log(data.table, 'zo storu');
+      console.log(this.myForm.controls['rows'].value, 'z formularu')
+      this.dataSource = data.table;
+    })
   }
 
   initRows(id: number) {
     return new FormGroup({
-      firstName:  new FormControl<string>('test', Validators.required),
-      lastName:  new FormControl<string>('', Validators.required),
-      account:  new FormControl<number | null>(null, Validators.required),
-      id: new FormControl(id)
+      firstName: new FormControl<string>('test', Validators.required),
+      lastName: new FormControl<string>('', Validators.required),
+      account: new FormControl<number | null>(null, Validators.required),
+      id: new FormControl(id),
     });
   }
 
   saveRow(id) {
-    const control = <UntypedFormArray>this.myForm.controls['rows'].value[id];
-    this.store.add(control);
+    this.facade.addToStore(<UntypedFormArray>this.myForm.controls['rows'].value[id]);
   }
 
- removeRow(i, id) {
-    this.undoRow[i].showUndo = true;
-    const control = <UntypedFormArray>this.myForm.controls['rows'];
-    this.undoRow[i].timer = setTimeout(() => {
-      const index = control.value
-        .map(d => {
-          return d['id'];
-        })
-        .indexOf(id);
-      control.removeAt(index);
-      this.undoRow.splice(index, 1);
-      this.dataSource = this.myForm.controls['rows'].value;
-    }, 3000);
+  removeRow(id) {
+    this.facade.removeRow(id);
   }
 
   addRows() {
     this.countId++;
     const control = <UntypedFormArray>this.myForm.controls['rows'];
     control.push(this.initRows(this.countId));
-    this.dataSource = this.myForm.controls['rows'].value;
+    this.store.add(this.myForm.controls['rows'].value[this.countId]);
     this.undoRow.push({ showUndo: false, timer: 0 });
   }
 
-  undoDelete(i: number) {
-    this.undoRow[i].showUndo = false;
-    clearTimeout(this.undoRow[i].timer);
+  undoDelete(id: number) {
+    this.facade.undoRemove(id);
   }
 }
-

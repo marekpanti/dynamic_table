@@ -4,6 +4,10 @@
   gap: 1rem;
   padding: 1rem;
 
+  span {
+    cursor: pointer;
+  }
+
   .button-group {
     display: flex;
     align-items: center;

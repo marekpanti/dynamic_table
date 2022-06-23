@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SummaryComponent } from './components/summary/summary.component';
 import { EnterComponent } from '../enter/enter.component';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [TableComponent, SummaryComponent, EnterComponent],
@@ -21,10 +22,7 @@ import { EnterComponent } from '../enter/enter.component';
     FormsModule,
     ReactiveFormsModule,
     TableRoutingModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
+    MaterialModule
   ],
   providers: [],
 })

@@ -1,10 +1,14 @@
-import { EventEmitter } from '@angular/core';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  UntypedFormBuilder,
   UntypedFormGroup,
-  UntypedFormArray
+  UntypedFormArray,
+  FormGroup,
+  FormControl,
+  FormArray,
+  Validators
 } from '@angular/forms';
+import { TableForm } from '../../models/table.model';
+import { StoreService } from '../../store.service';
 
 @Component({
   selector: 'app-table',
@@ -12,29 +16,34 @@ import {
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  accountArray: number[];
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'account', 'delete'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'account', 'actions'];
   dataSource;
   undoRow = [{ showUndo: false, timer: 0 }];
   countId = 0;
   public myForm: UntypedFormGroup;
-  constructor(private _fb: UntypedFormBuilder){}
+  constructor(private store: StoreService){}
 
   ngOnInit() {
-    this.myForm = this._fb.group({
-      testField: ['testValue'],
-      rows: this._fb.array([this.initRows(0)])
+    this.myForm = new FormGroup<TableForm>({
+      testField: new FormControl<string>('testValue'),
+      rows: new FormArray([this.initRows(0)])
     });
     this.dataSource = this.myForm.controls['rows'].value;
+    this.myForm.valueChanges.subscribe(d => console.log(d));
   }
 
   initRows(id: number) {
-    return this._fb.group({
-      firstName: ['test'],
-      lastName: [''],
-      account: [],
-      id: [id]
+    return new FormGroup({
+      firstName:  new FormControl<string>('test', Validators.required),
+      lastName:  new FormControl<string>('', Validators.required),
+      account:  new FormControl<number | null>(null, Validators.required),
+      id: new FormControl(id)
     });
+  }
+
+  saveRow(id) {
+    const control = <UntypedFormArray>this.myForm.controls['rows'].value[id];
+    this.store.add(control);
   }
 
  removeRow(i, id) {
@@ -49,7 +58,6 @@ export class TableComponent implements OnInit {
       control.removeAt(index);
       this.undoRow.splice(index, 1);
       this.dataSource = this.myForm.controls['rows'].value;
-      this.getAccounts();
     }, 3000);
   }
 
@@ -64,10 +72,6 @@ export class TableComponent implements OnInit {
   undoDelete(i: number) {
     this.undoRow[i].showUndo = false;
     clearTimeout(this.undoRow[i].timer);
-  }
-
-  getAccounts() {
-    this.accountArray = this.myForm.controls['rows'].value.map(item => item.account);
   }
 }
 

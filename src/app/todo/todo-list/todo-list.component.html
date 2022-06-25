@@ -1,0 +1,19 @@
+<div class="content">
+  <h1>Angular's to do list example</h1>
+  <app-add-todo (addTodoEvent)="addTodo($event)"></app-add-todo>
+
+  <div class="todos">
+    <div *ngFor="let todo of (getToDos$ | async)?.todos; let index = i;" class="todo">
+      <span>{{ todo.date | date }}</span
+      ><span>{{ todo.name }} </span>
+
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="removeTodo(index)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

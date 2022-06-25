@@ -1,0 +1,16 @@
+<mat-card>
+  <form>
+    <mat-form-field>
+      <mat-label>What should I've done?</mat-label>
+      <input matInput placeholder="I have to..." [formControl]="name" >
+    </mat-form-field>
+  </form>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addTodo()"
+  >
+    Add Todo
+  </button>
+</mat-card>

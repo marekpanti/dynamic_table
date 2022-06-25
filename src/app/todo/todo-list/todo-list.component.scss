@@ -1,0 +1,20 @@
+.content {
+  margin: 2rem auto;
+  width: 90%;;
+  max-width: 960px;
+
+  .todos {
+    margin: 1rem;
+
+    .todo {
+      background: #2a2a2a;
+      color: white;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem;
+      padding: 2rem;
+      border-radius: 5px;
+    }
+  }
+}

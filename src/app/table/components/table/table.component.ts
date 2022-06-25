@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  UntypedFormGroup,
   UntypedFormArray,
   FormGroup,
   FormControl,
@@ -8,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TableForm } from '../../models/table.model';
-import { StoreService } from '../../store.service';
+import { TableStoreService } from '../../table-store.service';
 import { TableFacadeService } from '../../table-facade.service';
 
 @Component({
@@ -25,28 +24,21 @@ export class TableComponent implements OnInit {
     'actions',
   ];
   dataSource;
-  undoRow = [{ showUndo: false, timer: 0 }];
   countId = 0;
-  public myForm: UntypedFormGroup;
+  public myForm = new FormGroup<TableForm>({
+    testField: new FormControl<string>('testValue'),
+    rows: new FormArray([this.initRows(0)]),
+  });
   constructor(
-    private store: StoreService,
+    private store: TableStoreService,
     private facade: TableFacadeService
   ) {}
 
   ngOnInit() {
-    this.myForm = new FormGroup<TableForm>({
-      testField: new FormControl<string>('testValue'),
-      rows: new FormArray([this.initRows(0)]),
-    });
-    this.dataSource = this.myForm.controls['rows'].value;
-    // this.store.add(this.myForm.controls['rows'].value[0]);
     this.saveRow(0);
-    // this.myForm.valueChanges.subscribe((d) => console.log(d));
-    this.store.stateChanged.subscribe(data => {
-      console.log(data.table, 'zo storu');
-      console.log(this.myForm.controls['rows'].value, 'z formularu')
+    this.store.stateChanged.subscribe((data) => {
       this.dataSource = data.table;
-    })
+    });
   }
 
   initRows(id: number) {
@@ -59,7 +51,9 @@ export class TableComponent implements OnInit {
   }
 
   saveRow(id) {
-    this.facade.addToStore(<UntypedFormArray>this.myForm.controls['rows'].value[id]);
+    this.facade.addToStore(
+      <UntypedFormArray>this.myForm.controls['rows'].value[id]
+    );
   }
 
   removeRow(id) {
@@ -71,7 +65,6 @@ export class TableComponent implements OnInit {
     const control = <UntypedFormArray>this.myForm.controls['rows'];
     control.push(this.initRows(this.countId));
     this.store.add(this.myForm.controls['rows'].value[this.countId]);
-    this.undoRow.push({ showUndo: false, timer: 0 });
   }
 
   undoDelete(id: number) {

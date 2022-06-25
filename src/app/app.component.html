@@ -1,13 +1,19 @@
-<mat-toolbar color="primary" class="toolbar">
-  <span routerLink="/">Angular architecture example</span>
-  <div class="button-group">
-    <mat-slide-toggle>Enable Dark Mode</mat-slide-toggle>
-    <button mat-icon-button routerLink="table" aria-label="Reactive form with table page">
-      <mat-icon>table_rows</mat-icon>
-    </button>
-    <button mat-icon-button aria-label="Checklist page">
-      <mat-icon>checklist</mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
-<router-outlet></router-outlet>
+<div [ngClass]="{'dark-theme': isDarkTheme | async}">
+  <mat-toolbar color="primary" class="toolbar">
+    <span routerLink="/">Angular architecture example</span>
+    <div class="button-group">
+      <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Enable Dark Mode</mat-slide-toggle>
+      <button
+        mat-icon-button
+        routerLink="table"
+        aria-label="Reactive form with table page"
+      >
+        <mat-icon>table_rows</mat-icon>
+      </button>
+      <button mat-icon-button routerLink="to-do" aria-label="Checklist page">
+        <mat-icon>checklist</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</div>

@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { StoreState } from './models/table.model';
 
 @Injectable({ providedIn: 'root' })
-export class StoreService extends ObservableStore<StoreState> {
+export class TableStoreService extends ObservableStore<StoreState> {
   constructor() {
     super({ trackStateHistory: true });
     const initialState: StoreState = {
@@ -32,14 +32,10 @@ export class StoreService extends ObservableStore<StoreState> {
       return item.id === row.id;
     });
     if (changeExistingRow) {
-      console.log('existing')
-
       // copy the object with spread operator to avoid refferences error
       tableState[index] = { ...row };
     } else {
-      console.log('new')
       tableState = [...tableState, row];
-      console.log(tableState);
     }
     this.setState({ table: tableState }, 'ADD_ROW_TO_TABLE');
   }
@@ -49,15 +45,6 @@ export class StoreService extends ObservableStore<StoreState> {
     const rowIndex = state.findIndex(row => row.id === id);
     state[rowIndex].showUndo = !state[rowIndex].showUndo;
     this.setState({ table: state }, 'CHANGE_UNDO_STATE');
-  }
-
-  setTimeOut(id) {
-    let timeOuts = this.getState().timeOuts;
-
-  }
-
-  clearTimeOut(id) {
-
   }
 
   removeRow(id) {

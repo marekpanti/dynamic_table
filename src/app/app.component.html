@@ -1,8 +1,8 @@
-<div [ngClass]="{'dark-theme': isDarkTheme | async}">
+<div [ngClass]="{'dark-theme': isDarkTheme$ | async}">
   <mat-toolbar color="primary" class="toolbar">
     <span routerLink="/">Angular architecture example</span>
     <div class="button-group">
-      <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Enable Dark Mode</mat-slide-toggle>
+      <mat-slide-toggle [checked]="isDarkTheme$ | async" (change)="toggleDarkTheme($event.checked)">Enable Dark Mode</mat-slide-toggle>
       <button
         mat-icon-button
         routerLink="table"

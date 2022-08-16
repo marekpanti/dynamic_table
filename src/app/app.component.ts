@@ -8,12 +8,12 @@ import { ThemeService } from './theme.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  isDarkTheme: Observable<boolean>;
+  isDarkTheme$: Observable<boolean> = this.themeService.isDarkTheme;
 
   constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
-    this.isDarkTheme = this.themeService.isDarkTheme;
+    this.themeService.checkStorageForDarkTheme();
   }
   toggleDarkTheme(checked: boolean) {
     this.themeService.setDarkTheme(checked);

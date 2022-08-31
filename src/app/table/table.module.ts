@@ -8,9 +8,10 @@ import { TableRoutingModule } from './table-routing.module';
 import { CommonModule } from '@angular/common';
 import { SummaryComponent } from './components/summary/summary.component';
 import { MaterialModule } from '../material.module';
+import { ColumnOrderDialog } from './components/change-columns/change-columns.component';
 
 @NgModule({
-  declarations: [TableComponent, SummaryComponent],
+  declarations: [TableComponent, SummaryComponent, ColumnOrderDialog],
   imports: [
     CommonModule,
     FormsModule,

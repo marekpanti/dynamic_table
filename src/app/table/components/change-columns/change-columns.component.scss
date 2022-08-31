@@ -1,0 +1,20 @@
+.item {
+  padding: 0.2rem;
+  border: 1px solid #9a9a9a;
+  border-radius: 5px;
+  margin: 0.2rem;
+  font-size: 14px;
+  font-weight: bold;
+
+  &:active {
+    background: #ebebeb;
+  }
+}
+
+.selected {
+  background: rgb(173, 173, 173);
+}
+
+mat-card {
+  margin: 1rem auto;
+}

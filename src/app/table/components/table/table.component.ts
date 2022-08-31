@@ -9,6 +9,9 @@ import {
 import { TableForm } from '../../models/table.model';
 import { TableStoreService } from '../../table-store.service';
 import { TableFacadeService } from '../../table-facade.service';
+import { displayedColumns } from './tableColumns';
+import { MatDialog } from '@angular/material/dialog';
+import { ColumnOrderDialog } from '../change-columns/change-columns.component';
 
 @Component({
   selector: 'app-table',
@@ -16,13 +19,7 @@ import { TableFacadeService } from '../../table-facade.service';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = [
-    'id',
-    'firstName',
-    'lastName',
-    'account',
-    'actions',
-  ];
+  displayedColumns: string[] = displayedColumns;
   dataSource;
   countId = 0;
   public myForm = new FormGroup<TableForm>({
@@ -31,7 +28,8 @@ export class TableComponent implements OnInit {
   });
   constructor(
     private store: TableStoreService,
-    private facade: TableFacadeService
+    private facade: TableFacadeService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -47,6 +45,17 @@ export class TableComponent implements OnInit {
       lastName: new FormControl<string>('', Validators.required),
       account: new FormControl<number | null>(null, Validators.required),
       id: new FormControl(id),
+    });
+  }
+
+  openChangeOrderColumnsDialog() {
+    this.dialog.open(ColumnOrderDialog, {
+      width: '400px',
+      data: [...this.displayedColumns],
+    }).afterClosed().subscribe(data => {
+      if (data) {
+        this.displayedColumns = [...data];
+      }
     });
   }
 

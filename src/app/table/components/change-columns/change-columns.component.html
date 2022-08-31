@@ -1,0 +1,14 @@
+<h2>Switch column positions</h2>
+<p>Select your first column which you would like to switch, then select its new position.</p>
+<mat-card *ngIf="data">
+  <div
+    *ngFor="let item of data; let index = index"
+    class="item"
+    [class.selected]="index === currentColumnIndex"
+    (click)="change(index)"
+  >
+    {{index}} : {{ item }}
+  </div>
+</mat-card>
+<button mat-button (click)="close() ">Cancel</button>
+<button mat-raised-button color="primary" (click)="save()">Save</button>

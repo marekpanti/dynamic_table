@@ -1,6 +1,7 @@
 <div class="content">
   <h1>Angular's dynamic table - Account Calculator</h1>
   <button mat-raised-button color="primary" (click)="openChangeOrderColumnsDialog()">Switch positions of columns</button>
+  <button mat-raised-button color="primary" (click)="openReorderColumnsDialog()">Reorder columns</button>
   <form [formGroup]="myForm" novalidate>
     <mat-form-field>
       <input matInput formControlName="testField" class="form-control" />

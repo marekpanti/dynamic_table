@@ -15,7 +15,7 @@ export class ColumnOrderDialog {
     @Inject(MAT_DIALOG_DATA) public data: string[]
   ) {}
 
-  change(index) {
+  switchPosition(index) {
     if (this.currentColumnIndex === null) {
       this.currentColumnIndex = index;
     } else {

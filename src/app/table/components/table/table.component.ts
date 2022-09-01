@@ -12,6 +12,7 @@ import { TableFacadeService } from '../../table-facade.service';
 import { displayedColumns } from './tableColumns';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnOrderDialog } from '../change-columns/change-columns.component';
+import { ColumnReorderDialog } from '../reorder-columns/reorder-columns.component';
 
 @Component({
   selector: 'app-table',
@@ -50,6 +51,17 @@ export class TableComponent implements OnInit {
 
   openChangeOrderColumnsDialog() {
     this.dialog.open(ColumnOrderDialog, {
+      width: '400px',
+      data: [...this.displayedColumns],
+    }).afterClosed().subscribe(data => {
+      if (data) {
+        this.displayedColumns = [...data];
+      }
+    });
+  }
+
+  openReorderColumnsDialog() {
+    this.dialog.open(ColumnReorderDialog, {
       width: '400px',
       data: [...this.displayedColumns],
     }).afterClosed().subscribe(data => {

@@ -31,25 +31,33 @@ export class ColumnReorderDialog {
     }
   }
 
-  immutableReorder(array: string[], from: number, to: number) {
-    return array.reduce((prev, current, idx, self) => {
-      if (from === to) {
-        prev.push(current);
+  immutableReorder(array: string[], fromIndex: number, toIndex: number) {
+    return array.reduce((prev, current, index, wholeArray) => {
+      // if index of starting is the same as end, we want just to add current index of iteration to new array
+      if (fromIndex === toIndex) {
+        prev = [...prev, current];
+        console.log('prva');
       }
-      if (idx === from) {
+      // in case that index of iteration is equal to our starting point we want to skip
+      if (index === fromIndex) {
+        console.log('index of iteration == fromIndex');
         return prev;
       }
-      if (from < to) {
-        prev.push(current);
+      if (fromIndex < toIndex) {
+        console.log('from index, je mensi ako to index');
+        prev = [...prev, current];
       }
-      if (idx === to) {
-        prev.push(self[from]);
+      // if index of iteration is equal to toIndex, we add to our new array item[fromIndex] because this creates the new position
+      if (index === toIndex) {
+        console.log('index of iteration je rovnaky ako toIndex');
+        prev = [...prev, wholeArray[fromIndex]];
       }
-      if (from > to) {
-        prev.push(current);
+      if (fromIndex > toIndex) {
+        prev = [...prev, current];
       }
       return prev;
     }, []);
+    // initial value empty array
   }
 
   close() {

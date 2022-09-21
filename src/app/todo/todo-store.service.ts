@@ -27,13 +27,11 @@ export class TodoStoreService extends ObservableStore<ToDoStoreState> {
 
   add(todo: TodoItem) {
     let todoState = this.getState().todos;
-      console.log('new')
       todoState = [...todoState, todo];
     this.setState({ todos: todoState }, 'ADD_TODO');
   }
 
   removeRow(id) {
-    console.log('remove', id);
     let state = this.getState().todos;
     state.splice(id, 1);
     this.setState({ todos: state }, 'REMOVE_TODO_ID');

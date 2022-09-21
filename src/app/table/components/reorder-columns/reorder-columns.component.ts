@@ -36,20 +36,16 @@ export class ColumnReorderDialog {
       // if index of starting is the same as end, we want just to add current index of iteration to new array
       if (fromIndex === toIndex) {
         prev = [...prev, current];
-        console.log('prva');
       }
       // in case that index of iteration is equal to our starting point we want to skip
       if (index === fromIndex) {
-        console.log('index of iteration == fromIndex');
         return prev;
       }
       if (fromIndex < toIndex) {
-        console.log('from index, je mensi ako to index');
         prev = [...prev, current];
       }
       // if index of iteration is equal to toIndex, we add to our new array item[fromIndex] because this creates the new position
       if (index === toIndex) {
-        console.log('index of iteration je rovnaky ako toIndex');
         prev = [...prev, wholeArray[fromIndex]];
       }
       if (fromIndex > toIndex) {

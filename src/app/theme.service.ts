@@ -7,7 +7,6 @@ export class ThemeService {
 
   checkStorageForDarkTheme() {
     if (localStorage.getItem('isDarkMode') === 'true') {
-      console.log('tu');
       this.isDarkTheme.next(true);
     } else {
       this.isDarkTheme.next(false);

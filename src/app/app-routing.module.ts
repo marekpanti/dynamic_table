@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EnterComponent } from './enter/enter.component';
+import { FetchingComponent } from './fetching/fetching.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
     path: 'to-do',
     loadChildren: () => import('./todo/todo.module').then((m) => m.TodoModule),
   },
+  {
+    path: 'fetching',
+    component: FetchingComponent
+  }
 ];
 
 @NgModule({

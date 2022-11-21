@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TodoFacadeService } from '../todo-facade.service';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  styleUrls: ['./todo-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoListComponent {
   getToDos$ = this.facade.getTodos();
 
   constructor(private facade: TodoFacadeService) {}
+
+  ngDoCheck() {
+    console.log('TodoList Component')
+  }
 
   addTodo(name: string) {
     const date = new Date();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   UntypedFormArray,
   FormGroup,
@@ -13,14 +13,17 @@ import { displayedColumns } from './tableColumns';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnOrderDialog } from '../change-columns/change-columns.component';
 import { ColumnReorderDialog } from '../reorder-columns/reorder-columns.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnInit {
   displayedColumns: string[] = displayedColumns;
+  displayedColumnsSubject$: BehaviorSubject<string[]> = new BehaviorSubject(displayedColumns);
   dataSource;
   countId = 0;
   public myForm = new FormGroup<TableForm>({
@@ -38,6 +41,10 @@ export class TableComponent implements OnInit {
     this.store.stateChanged.subscribe((data) => {
       this.dataSource = data.table;
     });
+  }
+
+  ngDoCheck() {
+    console.log('Table Component')
   }
 
   initRows(id: number) {
@@ -66,7 +73,10 @@ export class TableComponent implements OnInit {
       data: [...this.displayedColumns],
     }).afterClosed().subscribe(data => {
       if (data) {
+        console.log('reorder');
+        // this won't trigger change detection
         this.displayedColumns = [...data];
+        this.displayedColumnsSubject$.next(data);
       }
     });
   }

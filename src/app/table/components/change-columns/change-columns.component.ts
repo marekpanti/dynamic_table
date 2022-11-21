@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'column-order',
   templateUrl: 'change-columns.component.html',
   styleUrls: ['./change-columns.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ColumnOrderDialog {
   currentColumnIndex = null;
@@ -14,6 +15,10 @@ export class ColumnOrderDialog {
     public dialogRef: MatDialogRef<ColumnOrderDialog>,
     @Inject(MAT_DIALOG_DATA) public data: string[]
   ) {}
+
+  ngDoCheck() {
+    console.log('Change Columns Component')
+  }
 
   switchPosition(index) {
     if (this.currentColumnIndex === null) {

@@ -9,12 +9,20 @@ import { ThemeService } from './theme.service';
 })
 export class AppComponent {
   isDarkTheme$: Observable<boolean> = this.themeService.isDarkTheme;
+  firstName = 'Lolek';
+  lastName = 'Bolekov';
 
   constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
     this.themeService.checkStorageForDarkTheme();
   }
+
+  fullName(firstName, lastName) {
+    console.log('runs x times in component');
+    return firstName + ' ' + lastName;
+  }
+
   toggleDarkTheme(checked: boolean) {
     this.themeService.setDarkTheme(checked);
   }

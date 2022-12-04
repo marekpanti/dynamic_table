@@ -16,5 +16,10 @@
       </button>
     </div>
   </mat-toolbar>
+  <div class="name-example">
+    Without method or pipe: {{ firstName }} {{ lastName }} <br>
+    With component method: {{fullName(firstName, lastName)}} <br>
+    with pipe: {{ (firstName) | fullName: lastName }}
+  </div>
   <router-outlet></router-outlet>
 </div>

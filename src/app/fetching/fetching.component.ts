@@ -20,12 +20,10 @@ import { ToDoInterface } from './models/todo.interface';
   styleUrls: ['./fetching.component.scss']
 })
 export class FetchingComponent {
-  todos: ToDoInterface[];
-
-  constructor(private facade: FetchingFacadeService) {}
+  constructor(public facade: FetchingFacadeService) {}
 
   ngOnInit() {
-    this.fetchTodos().subscribe(todos => this.todos = todos);
+    this.fetchTodos().subscribe();
   }
 
   fetchTodos(): Observable<ToDoInterface[]> {

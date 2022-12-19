@@ -1,5 +1,5 @@
 <h1>Fetched items</h1>
 
-<div *ngFor="let todo of todos">
+<div *ngFor="let todo of (facade.allToDos$ | async)">
   {{todo.title}}  {{ todo.completed }}
 </div>

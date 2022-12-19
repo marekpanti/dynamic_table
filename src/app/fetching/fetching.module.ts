@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { FetchingComponent } from './fetching.component';
 import { FetchingRoutingModule } from './fetching-routing.module';
+import { FetchingApiService } from './fetching-api.service';
+import { FetchingFacadeService } from './fetching-facade.service';
 
 @NgModule({
   declarations: [FetchingComponent],
@@ -16,6 +18,6 @@ import { FetchingRoutingModule } from './fetching-routing.module';
     MaterialModule,
     FetchingRoutingModule
   ],
-  providers: [],
+  providers: [FetchingApiService, FetchingFacadeService],
 })
 export class FetchingModule {}

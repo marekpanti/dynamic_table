@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FetchingFacadeService } from './fetching-facade.service';
+import { ToDoInterface } from './models/todo.interface';
 
 
 // 1. Create new module to lazy load fetching
@@ -12,30 +14,21 @@ import { Observable } from 'rxjs';
 // 7. Layut and (click) event
 // 8. Create more components to make it granular
 
-
-
-export interface ToDo {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
 @Component({
   selector: 'app-fetching',
   templateUrl: './fetching.component.html',
   styleUrls: ['./fetching.component.scss']
 })
 export class FetchingComponent {
-  todos: ToDo[];
+  todos: ToDoInterface[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private facade: FetchingFacadeService) {}
 
   ngOnInit() {
     this.fetchTodos().subscribe(todos => this.todos = todos);
   }
 
-  fetchTodos(): Observable<any> {
-    return this.http.get('https://jsonplaceholder.typicode.com/todos/');
+  fetchTodos(): Observable<ToDoInterface[]> {
+    return this.facade.fetchTodos();
   }
 }

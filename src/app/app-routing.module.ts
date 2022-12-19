@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EnterComponent } from './enter/enter.component';
-import { FetchingComponent } from './fetching/fetching.component';
 
 const routes: Routes = [
   {
@@ -18,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'fetching',
-    component: FetchingComponent
+    loadChildren: () => import('./fetching/fetching.module').then((m) => m.FetchingModule),
   }
 ];
 

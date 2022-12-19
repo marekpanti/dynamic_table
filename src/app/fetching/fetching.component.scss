@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 800px;
+  width: 60%;
+  background: #9a9a9a;
+  border-radius: 5px;
+  margin: auto;
+  overflow-y: scroll;
+
+  div {
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+
+    .status {
+      color: red;
+    }
+
+    .isCompleted {
+      color: green;
+    }
+  }
+}

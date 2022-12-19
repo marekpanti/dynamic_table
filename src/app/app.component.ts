@@ -12,6 +12,8 @@ export class AppComponent {
   firstName = 'Lolek';
   lastName = 'Bolekov';
 
+  today: Date = new Date();
+
   constructor(private themeService: ThemeService) {}
 
   ngOnInit() {

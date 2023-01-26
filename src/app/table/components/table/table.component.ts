@@ -5,6 +5,8 @@ import {
   FormControl,
   FormArray,
   Validators,
+  FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { TableForm } from '../../models/table.model';
 import { TableStoreService } from '../../table-store.service';
@@ -13,11 +15,30 @@ import { displayedColumns } from './tableColumns';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnOrderDialog } from '../change-columns/change-columns.component';
 import { ColumnReorderDialog } from '../reorder-columns/reorder-columns.component';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { SummaryComponent } from '../summary/summary.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SummaryComponent,
+    MatFormFieldModule,
+    MatInputModule
+  ],
 })
 export class TableComponent implements OnInit {
   displayedColumns: string[] = displayedColumns;
@@ -50,25 +71,31 @@ export class TableComponent implements OnInit {
   }
 
   openChangeOrderColumnsDialog() {
-    this.dialog.open(ColumnOrderDialog, {
-      width: '400px',
-      data: [...this.displayedColumns],
-    }).afterClosed().subscribe(data => {
-      if (data) {
-        this.displayedColumns = [...data];
-      }
-    });
+    this.dialog
+      .open(ColumnOrderDialog, { // not needed to be imported elsewhere
+        width: '400px',
+        data: [...this.displayedColumns],
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.displayedColumns = [...data];
+        }
+      });
   }
 
   openReorderColumnsDialog() {
-    this.dialog.open(ColumnReorderDialog, {
-      width: '400px',
-      data: [...this.displayedColumns],
-    }).afterClosed().subscribe(data => {
-      if (data) {
-        this.displayedColumns = [...data];
-      }
-    });
+    this.dialog
+      .open(ColumnReorderDialog, {
+        width: '400px',
+        data: [...this.displayedColumns],
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.displayedColumns = [...data];
+        }
+      });
   }
 
   saveRow(id) {

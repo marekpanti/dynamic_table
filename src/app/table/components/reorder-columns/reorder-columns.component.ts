@@ -1,10 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'reorder-order',
   templateUrl: 'reorder-columns.component.html',
   styleUrls: ['./reorder-columns.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatCardModule]
 })
 export class ColumnReorderDialog {
   currentColumnIndex = null;

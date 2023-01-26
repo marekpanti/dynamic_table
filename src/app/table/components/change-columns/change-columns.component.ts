@@ -1,10 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'column-order',
   templateUrl: 'change-columns.component.html',
   styleUrls: ['./change-columns.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatCardModule]
 })
 export class ColumnOrderDialog {
   currentColumnIndex = null;

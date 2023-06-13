@@ -1,7 +1,7 @@
 <h1>Fetched items</h1>
 
 <div class="list">
-  <div *ngFor="let todo of (facade.allToDos$ | async)">
+  <div *ngFor="let todo of (facade.allTodosSignal())">
     <span class="title">{{todo.title}}</span>  <span class="status" [class.isCompleted]="todo.completed">{{ todo.completed }}</span>
   </div>
 </div>

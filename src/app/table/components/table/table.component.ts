@@ -10,7 +10,7 @@ import { TableForm } from '../../models/table.model';
 import { TableStoreService } from '../../table-store.service';
 import { TableFacadeService } from '../../table-facade.service';
 import { displayedColumns } from './tableColumns';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ColumnOrderDialog } from '../change-columns/change-columns.component';
 import { ColumnReorderDialog } from '../reorder-columns/reorder-columns.component';
 

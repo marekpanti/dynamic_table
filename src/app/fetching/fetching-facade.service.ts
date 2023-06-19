@@ -20,8 +20,10 @@ export class FetchingFacadeService {
     );
   }
 
-  addTodo() {
-
+  addTodo(todo: string) {
+    console.log(todo);
+    this.allTodosSignal.mutate((signals: any[]) => signals[0].title = todo)
+    console.log(this.allTodosSignal());
   }
 
   removeTodo() {

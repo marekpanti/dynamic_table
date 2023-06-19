@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FetchingFacadeService } from './fetching-facade.service';
 import { ToDoInterface } from './models/todo.interface';
@@ -20,7 +20,11 @@ import { ToDoInterface } from './models/todo.interface';
   styleUrls: ['./fetching.component.scss']
 })
 export class FetchingComponent {
-  constructor(public facade: FetchingFacadeService) {}
+  constructor(public facade: FetchingFacadeService) {
+    effect(() => {
+      console.log(`The list of signals is: ${this.facade.allTodosSignal()}`);
+    });
+  }
 
   ngOnInit() {
     this.fetchTodos().subscribe();
@@ -28,5 +32,12 @@ export class FetchingComponent {
 
   fetchTodos(): Observable<ToDoInterface[]> {
     return this.facade.fetchTodos();
+  }
+
+  addTodo(newTodo = 'New Test Todo') {
+    // if (!newTodo) {
+    //   newTodo = 'nejaky trapny string';
+    // }
+    this.facade.addTodo(newTodo);
   }
 }

@@ -1,5 +1,7 @@
 <h1>Fetched items</h1>
 
+<button (click)="addTodo()">Add new todo</button>
+
 <div class="list">
   <div *ngFor="let todo of (facade.allTodosSignal())">
     <span class="title">{{todo.title}}</span>  <span class="status" [class.isCompleted]="todo.completed">{{ todo.completed }}</span>

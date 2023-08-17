@@ -1,13 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { ToDoInterface } from "./models/todo.interface";
+import { Injectable } from '@angular/core';
+import { ToDoInterface } from './models/todo.interface';
 
 @Injectable()
 export class FetchingApiService {
-  constructor(private http: HttpClient) {}
-
-  fetchTodos(): Observable<ToDoInterface[]> {
-    return this.http.get<ToDoInterface[]>('https://jsonplaceholder.typicode.com/todos/');
+  async fetchTodosClassicApproach(): Promise<ToDoInterface[]> {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos/');
+    const todos = await response.json();
+    return todos;
   }
 }

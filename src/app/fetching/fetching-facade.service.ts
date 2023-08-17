@@ -1,32 +1,36 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { FetchingApiService } from './fetching-api.service';
 import { ToDoInterface } from './models/todo.interface';
 
 @Injectable()
 export class FetchingFacadeService {
-  public allToDos$ = new BehaviorSubject(null);
   public allTodosSignal = signal([]);
 
   constructor(private fetchService: FetchingApiService) {}
 
-  fetchTodos(): Observable<ToDoInterface[]> {
-    return this.fetchService.fetchTodos().pipe(
-      tap((todos: ToDoInterface[]) => {
-        this.allToDos$.next(todos);
-        this.allTodosSignal.set(todos);
-      })
-    );
+  async fetchTodos() {
+    const myTodosResponse: ToDoInterface[] =
+      await this.fetchService.fetchTodosClassicApproach();
+    this.allTodosSignal.set(myTodosResponse);
   }
 
   addTodo(todo: string) {
     console.log(todo);
-    this.allTodosSignal.mutate((signals: any[]) => signals[0].title = todo)
+    this.allTodosSignal.mutate((signals: any[]) =>
+      signals.push({
+        id: new Date().toISOString(),
+        title: todo,
+        userId: 1,
+        completed: false,
+      })
+    );
     console.log(this.allTodosSignal());
   }
 
-  removeTodo() {
-
+  removeTodo(id: number | string) {
+    const filteredSignals = this.allTodosSignal().filter((signal) => {
+      return signal.id !== id;
+    });
+    this.allTodosSignal.set(filteredSignals);
   }
 }

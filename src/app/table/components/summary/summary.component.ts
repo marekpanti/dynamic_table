@@ -7,7 +7,7 @@ import { TableFacadeService } from '../../table-facade.service';
   styleUrls: ['./summary.component.scss'],
 })
 export class SummaryComponent {
-  finalCalcul$ = this.facade.calculateTotalAccounts();
+  // finalCalcul$ = this.facade.calculateTotalAccounts();
 
   constructor(private facade: TableFacadeService) {}
 }

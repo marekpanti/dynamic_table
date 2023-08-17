@@ -114,5 +114,9 @@
     </div>
   </form>
 
+  <div *ngFor="let row of signalStore.tableSignal()">
+    {{row | json}}
+  </div>
+
   <app-summary></app-summary>
 </div>

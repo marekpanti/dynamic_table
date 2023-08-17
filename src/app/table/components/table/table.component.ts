@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, effect } from '@angular/core';
 import {
   UntypedFormArray,
   FormGroup,
@@ -7,12 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { TableForm } from '../../models/table.model';
-import { TableStoreService } from '../../table-store.service';
 import { TableFacadeService } from '../../table-facade.service';
 import { displayedColumns } from './tableColumns';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ColumnOrderDialog } from '../change-columns/change-columns.component';
 import { ColumnReorderDialog } from '../reorder-columns/reorder-columns.component';
+import { MatDialog } from '@angular/material/dialog';
+import { TableSignalStore } from '../../table-signal.store';
 
 @Component({
   selector: 'app-table',
@@ -28,16 +28,19 @@ export class TableComponent implements OnInit {
     rows: new FormArray([this.initRows(0)]),
   });
   constructor(
-    private store: TableStoreService,
+    public signalStore: TableSignalStore,
     private facade: TableFacadeService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
+  ) {
+    effect(() => {
+      console.log(`Table change: ${this.signalStore.tableSignal()}`);
+      this.dataSource = [...this.signalStore.tableSignal()];
+    });
+  }
 
   ngOnInit() {
     this.saveRow(0);
-    this.store.stateChanged.subscribe((data) => {
-      this.dataSource = data.table;
-    });
   }
 
   initRows(id: number) {
@@ -82,10 +85,11 @@ export class TableComponent implements OnInit {
   }
 
   addRows() {
+    // Should be in the facade
     this.countId++;
     const control = <UntypedFormArray>this.myForm.controls['rows'];
     control.push(this.initRows(this.countId));
-    this.store.add(this.myForm.controls['rows'].value[this.countId]);
+    this.saveRow(this.countId);
   }
 
   undoDelete(id: number) {

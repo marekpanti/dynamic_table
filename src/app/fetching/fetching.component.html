@@ -1,6 +1,12 @@
 <h1>Fetched items</h1>
 
-<button (click)="addTodo()">Add new todo</button>
+<div class="current-user">
+  <h3>Current user is: {{ facade.currentUser().userName }}</h3>
+  <button mat-stroked-button color="primary" (click)="changeUserId()">Change userId</button>
+  <button mat-stroked-button color="primary" (click)="changeUserName()">Change userName</button>
+</div>
+
+<button mat-raised-button color="primary" (click)="addTodo()">Add new todo</button>
 
 <div class="list">
   <div *ngFor="let todo of (facade.allTodosSignal())">

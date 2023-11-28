@@ -5,16 +5,18 @@
   height: 800px;
   width: 60%;
   background: #9a9a9a;
-  border-radius: 5px;
+  border-radius: 15px;
   margin: auto;
   overflow-y: scroll;
+  padding: 1rem;
 
   div {
     background: white;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
-    width: 60%;
+    width: 90%;
+    padding: 0.5rem;
 
     .status {
       color: red;

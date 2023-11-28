@@ -17,6 +17,14 @@ export class FetchingComponent {
     this.facade.fetchTodos();
   }
 
+  changeUserId() {
+    this.facade.changeUserId();
+  }
+
+  changeUserName() {
+    this.facade.changeUserName();
+  }
+
   addTodo(newTodo = 'New Test Todo') {
     this.facade.addTodo(newTodo);
   }
